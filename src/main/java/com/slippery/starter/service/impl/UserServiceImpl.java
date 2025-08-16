@@ -7,6 +7,8 @@ import com.slippery.starter.models.Users;
 import com.slippery.starter.repository.UserRepository;
 import com.slippery.starter.service.JwtUtils;
 import com.slippery.starter.service.UserService;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -33,12 +36,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserResponse registerUser(UserRegistrationRequest request) {
         UserResponse response =new UserResponse();
         Users user =modelMapper.map(request, Users.class);
         userRepository.save(user);
         response.setMessage("New user registered successfully");
         response.setStatusCode(201);
+        Authentication authentication =new  UsernamePasswordAuthenticationToken(
+                request.getUsername(),request.getPassword()
+        );
+        authentication.setAuthenticated(true);
+        log.info(" im i authenticated? : {}",authentication.isAuthenticated());
         response.setJwtToken(jwtUtils.generateToken(user.getUsername()));
         return response;
     }

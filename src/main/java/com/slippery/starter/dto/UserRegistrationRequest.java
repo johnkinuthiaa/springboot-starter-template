@@ -23,6 +23,6 @@ public class UserRegistrationRequest {
     @NotBlank(message = "Passwords should not be blank")
     @Size(min = 6,max = 20,message = "passwords should not be less than 6 characters or more than 20 ")
     private String password;
-    private List<Role> roles =new ArrayList<>();
+    private Role roles ;
 //    add other user values
 }

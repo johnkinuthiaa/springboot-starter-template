@@ -39,7 +39,7 @@ public class SecurityConfig {
                                         "/api/v1/users/register",
                                         "/actuator/**",
                                         "/health/**"
-                                ).permitAll().anyRequest().fullyAuthenticated()
+                                ).permitAll().anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

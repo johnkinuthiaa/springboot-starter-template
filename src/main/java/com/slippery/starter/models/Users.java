@@ -26,7 +26,7 @@ public class Users {
     private String email;
     private String password;
 //    a user can be an admin and have another role based on the application needs
-    private List<Role> roles =new ArrayList<>();
+    private Role roles ;
 //    other values for the user
 
 }

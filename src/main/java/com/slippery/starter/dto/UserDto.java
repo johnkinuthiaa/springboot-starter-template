@@ -14,6 +14,6 @@ import java.util.List;
 public class UserDto {
     private String username;
     private String email;
-    private List<Role> roles =new ArrayList<>();
+    private Role roles ;
 //    add other user values
 }
